@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 1000px;height:700px;border:3px dashed #000;position:absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+
+var timeData =[
+'2018/8/1', '2018/8/2', '2018/8/3', '2018/8/4', 
+'2018/8/5', '2018/8/6', '2018/8/7', '2018/8/8',
+ '2018/8/9', '2018/8/10', '2018/8/11', '2018/8/12', 
+'2018/8/13', '2018/8/14', '2018/8/15', '2018/8/16',
+ '2018/8/17', '2018/8/18', '2018/8/19', '2018/8/20',
+ '2018/8/21', '2018/8/22', '2018/8/23', '2018/8/24', 
+'2018/8/25', '2018/8/26', '2018/8/27', '2018/8/28', 
+'2018/8/29', '2018/8/30', '2018/8/31'
+];
+
+timeData = timeData.map(function (str) {
+    return str.replace('2009/', '');
+});
+
+option = {
+    title: {
+        text: '每日数据变化图',
+        subtext: '数据来自云杉健康e站平台',
+        x: 'center'
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            animation: false
+        }
+    },
+    legend: {
+        data:['e站用户数(人)','数据检测数(条)'],
+        x: 'left'
+    },
+    toolbox: {
+		showTitle: false,
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    axisPointer: {
+        link: {xAxisIndex: 'all'}
+    },
+    dataZoom: [
+        {
+            show: true,
+            realtime: true,
+            start: 0,
+            end: 100,
+            xAxisIndex: [0, 1]
+        },
+        {
+            type: 'inside',
+            realtime: true,
+            start: 30,
+            end: 70,
+            xAxisIndex: [0, 1]
+        }
+    ],
+    grid: [{
+        left: 50,
+        right: 50,
+        height: '35%'
+    }, {
+        left: 50,
+        right: 50,
+        top: '54%',
+        height: '35%'
+    }],
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            data: timeData
+        },
+        {
+            gridIndex: 1,
+            type : 'category',
+            boundaryGap : false,
+            axisLine: {onZero: true},
+            data: timeData,
+        }
+    ],
+    yAxis : [
+        {
+            name : 'e站用户数(人)',
+            type : 'value',
+            max : 6
+        },
+        {
+            gridIndex: 1,
+            name : '数据检测数(条)',
+            type : 'value',
+            max: 60,
+            inverse: false
+        }
+    ],
+    series : [
+        {
+            name:'e站用户数(人)',
+            type:'line',
+			smooth: true,
+            symbolSize: 8,
+            hoverAnimation: false,
+            data:[
+1, 1, 1, 4, 4, 0, 1, 5, 2, 2, 5, 4, 4, 4, 2, 0, 3, 0, 1, 5, 3, 1, 5, 3, 5, 0, 3, 2, 4, 5, 3]
+        },
+        {
+            name:'数据检测数(条)',
+            type:'line',
+			smooth: true,
+            xAxisIndex: 1,
+            yAxisIndex: 1,
+            symbolSize: 8,
+            hoverAnimation: false,
+            data:
+[4, 5, 5, 22, 28, 0, 6, 22, 16, 19, 28, 6, 28, 24, 3, 0, 22, 0, 7, 44, 18, 7, 11, 31, 7, 0, 16, 9, 13, 15, 6]
+        }
+    ]
+};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
